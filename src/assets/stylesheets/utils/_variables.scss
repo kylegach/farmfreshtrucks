@@ -1,0 +1,22 @@
+/* Variables.scss
+ * Global variables used throughout source files
+ */
+
+/// Map of breakpoints for responsive design. Note that these will be converted
+/// to em units by the mq mixin.
+///
+/// @see {mixin} mq
+/// @type Map
+$mq-breakpoints: (
+	narrow :  300px,
+	medium :  740px,
+	wide   :  980px,
+	xwide  : 1300px
+) !global;
+
+/// Breakpoint above which styles will need be generated when $mq-responsive is
+/// set to 'false'
+///
+/// @see {mixin} mq
+/// @type String
+$mq-static-breakpoint: wide !global;

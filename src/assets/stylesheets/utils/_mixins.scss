@@ -1,0 +1,146 @@
+/* Mixins.scss
+ * Global mixins used throughout source files
+ */
+
+/// Completely hide at specific breakpoint
+///
+/// @see {mixin} mq
+/// @param {String} $breakpoint - Breakpoint
+/// @requires {mixin} mq
+/// @requires $mq-breakpoints
+@mixin hideAt($breakpoint) {
+	@include mq($breakpoint) {
+		@include hidden;
+	}
+}
+
+/// Visually hide at specific breakpoint
+///
+/// @see {mixin} mq
+/// @param {String} $breakpoint - Breakpoint
+/// @requires {mixin} mq
+/// @requires $mq-breakpoints
+@mixin hideVisuallyAt($breakpoint) {
+	@include mq($breakpoint) {
+		@include visuallyHidden;
+	}
+}
+
+/// Clearfix, to contain floats
+///
+/// @link http://nicolasgallagher.com/micro-clearfix-hack/
+@mixin clearfix {
+	&:before,
+	&:after
+	{
+		display: table;
+		content: "";
+	}
+	&:after {
+		clear: both;
+	}
+}
+
+/// Hide from both screenreaders and browsers.
+///
+/// @link h5bp.com/u
+@mixin hidden {
+	display: none !important;
+	visibility: hidden;
+}
+
+/// Hide only visually, but have it available for screenreaders. Can optionally
+/// allow the element to be focusable when navigated to via the keyboard.
+///
+/// @link h5bp.com/v
+/// @link h5bp.com/p
+/// @param {Boolean} $focusable - Should the element be focusable? Defaults to false.
+@mixin visuallyHidden($focusable: false) {
+	@if $focusable == false {
+		border: 0 !important;
+		clip: rect(0 0 0 0) !important;
+		height: 1px !important;
+		margin: -1px !important;
+		overflow: hidden !important;
+		padding: 0 !important;
+		position: absolute !important;
+		width: 1px !important;
+	} @else {
+		&:active,
+		&:focus {
+			clip: auto !important;
+			height: auto !important;
+			margin: 0 !important;
+			overflow: visible !important;
+			position: static !important;
+			width: auto !important;
+		}
+	}
+}
+
+/// Hide visually and from screenreaders, but maintain layout.
+@mixin invisible {
+	visibility: hidden;
+}
+
+/// For image replacement
+@mixin ir {
+	overflow: hidden;
+	text-indent: 100%;
+	white-space: nowrap;
+
+	br {
+		display: none;
+	}
+}
+
+/// Define width and height simultaneously. If no height provided, assume a square.
+///
+/// @param {Length} $width - width
+/// @param {Length} $height - height (defaults to $width)
+@mixin size($width, $height: $width) {
+	width: $width;
+	height: $height;
+}
+
+/// Make an element a circle with defined diameter
+///
+/// @param {Length} $diameter - diameter of circle
+/// @require {mixin} size
+@mixin circle($diameter) {
+	@include size($diameter);
+	border-radius: $diameter/2;
+}
+
+/// Make a list (ul, ol) not look like a list
+@mixin unList {
+	list-style: none;
+	list-style-image: none;
+	margin: 0;
+	padding: 0;
+}
+
+/// Force overly-long, single-line spans of text to truncate with ellipsis
+///
+/// @param {Length} $truncationBoundary - max-width of text (default is null)
+@mixin truncateText($truncationBoundary: ""){
+	@if ( $truncationBoundary != "" ) {
+		max-width: $truncationBoundary;
+	}
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/// Disallow text selection
+///
+/// @param {String} $value - 'none' (default) or 'text'
+@mixin userTextSelect($value: none) {
+	-webkit-user-select: $value; // Chrome all / Safari all
+	-moz-user-select: $value;    // Firefox all
+	-ms-user-select: $value;     // IE 10+
+
+	// No support for these yet, use at own risk
+	-o-user-select: $value;
+	user-select: $value;
+}

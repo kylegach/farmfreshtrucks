@@ -1,0 +1,11 @@
+/* BoxSizing.scss
+ * Global box-sizing normalization
+ */
+
+html {
+	box-sizing: border-box;
+}
+
+*, *:before, *:after {
+	box-sizing: inherit;
+}

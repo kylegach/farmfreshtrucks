@@ -1,0 +1,34 @@
+// The Mixins file is designed to be imported with no direct output. This file
+// supplies the output, if wanted.
+
+.clearfix {
+	@include clearfix;
+}
+
+.hidden {
+	@include hidden;
+}
+
+.visuallyHidden {
+	@include visuallyHidden;
+}
+
+.invisible {
+	@include invisible;
+}
+
+.ir {
+	@include ir;
+}
+
+.unList {
+	@include unList;
+}
+
+.userTextSelect {
+	@include userTextSelect;
+}
+
+.truncateText {
+	@include truncateText;
+}

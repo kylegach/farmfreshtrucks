@@ -1,0 +1,19 @@
+/// Slightly lighten a color
+/// (Note that I changed how this functions slightly from the linked source.)
+/// @link http://sass-guidelin.es/#lightening-and-darkening-colors
+/// @param {Color} $color - color to tint
+/// @param {Number} $percentage - percentage of `white` in returned color
+/// @return {Color}
+@function tint($color, $percentage) {
+  @return mix($color, white, 100-$percentage);
+}
+
+/// Slightly darken a color
+/// (Note that I changed how this functions slightly from the linked source.)
+/// @link http://sass-guidelin.es/#lightening-and-darkening-colors
+/// @param {Color} $color - color to shade
+/// @param {Number} $percentage - percentage of `black` in returned color
+/// @return {Color}
+@function shade($color, $percentage) {
+  @return mix($color, black, 100-$percentage);
+}
