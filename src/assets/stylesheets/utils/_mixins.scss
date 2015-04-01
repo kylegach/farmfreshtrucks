@@ -2,12 +2,73 @@
  * Global mixins used throughout source files
  */
 
+/// Make an element a circle with defined diameter
+///
+/// @param {Length} $diameter - diameter of circle
+/// @require {mixin} size
+@mixin circle($diameter) {
+	@include size($diameter);
+	border-radius: $diameter/2;
+}
+
+/// Clearfix, to contain floats
+///
+/// @link http://nicolasgallagher.com/micro-clearfix-hack/
+@mixin clearfix {
+	&:before,
+	&:after {
+		display: table;
+		content: "";
+	}
+	&:after {
+		clear: both;
+	}
+}
+
+/// Apply a margin (and other styles) to every selected item after the first one
+///
+/// @example scss
+///   .parent .box {
+///     color: red;
+///     @include doubly(1em) {
+///       color: blue;
+///     }
+///    }
+/// @example css
+///   .parent .box {
+///     color: red;
+///   }
+///   .parent .box + .box {
+///     margin-left: 1em;
+///     color: blue;
+///   }
+/// @link http://sassmeister.com/gist/588ad7614481d259fc74
+/// @link http://sassbreak.com/double-ampersand-mixin/
+/// @param {Number} $margin [null]
+/// @require {Function} x-tail
+// @mixin doubly($margin: null) {
+// 	& + #{x-tail(&)} {
+// 		@if $margin {
+// 			margin-left: $margin;
+// 		}
+// 		@content;
+// 	}
+// }
+
+/// Hide from both screenreaders and browsers.
+///
+/// @link h5bp.com/u
+@mixin hidden {
+	display: none !important;
+	visibility: hidden;
+}
+
 /// Completely hide at specific breakpoint
 ///
 /// @see {mixin} mq
 /// @param {String} $breakpoint - Breakpoint
-/// @requires {mixin} mq
-/// @requires $mq-breakpoints
+/// @require {Mixin} mq
+/// @require {Map} $mq-breakpoints
 @mixin hideAt($breakpoint) {
 	@include mq($breakpoint) {
 		@include hidden;
@@ -18,54 +79,141 @@
 ///
 /// @see {mixin} mq
 /// @param {String} $breakpoint - Breakpoint
-/// @requires {mixin} mq
-/// @requires $mq-breakpoints
+/// @require {Mixin} mq
+/// @require {Map} $mq-breakpoints
 @mixin hideVisuallyAt($breakpoint) {
 	@include mq($breakpoint) {
 		@include visuallyHidden;
 	}
 }
 
-/// Clearfix, to contain floats
+/// Static styles for the parent element.
 ///
-/// @link http://nicolasgallagher.com/micro-clearfix-hack/
-@mixin clearfix {
-	&:before,
-	&:after
-	{
-		display: table;
-		content: "";
-	}
-	&:after {
-		clear: both;
+/// @group Intrinsic Ratios
+/// @see {Mixin} intrinsicRatio
+@mixin intrinsicRatioParent {
+	position: relative;
+	height: 0;
+}
+
+/// Static styles for the child element(s).
+///
+/// @group Intrinsic Ratios
+/// @see {Mixin} intrinsicRatio
+@mixin intrinsicRatioChild {
+	display: block;
+	position: absolute;
+	width: 100% !important; // Nuke the external styles
+	height: 100% !important; // Nuke the external styles
+	top: 0;
+	margin: 0;
+	padding: 0;
+}
+
+/// Calculating and applying the dynamic styles for the parent element. Can be used on its own
+/// when only a change in ratio is needed (e.g. different ratios at different breakpoints).
+///
+/// @group Intrinsic Ratios
+/// @param {Number} $ratio [16/9]
+/// @param {Number} $width [100%]
+/// @param {String} $position [top]
+/// @see {Mixin} intrinsicRatio
+@mixin intrinsicRatioRatio($ratio: 16/9, $width: 100%, $position: top) {
+	padding-#{$position}: (1 / $ratio) * $width;
+	width: $width;
+}
+
+/// Easy intrinsic ratios. Adapted from Sass Toolkit.
+///
+/// @example html
+///   <div class="imgWrap">
+///     <img src="..." alt="...">
+///   </div>
+/// @example scss
+///   .imgWrap {
+///     @include intrinsic-ratio(4/3, 100%, '> img', top)
+///   }
+/// @example css
+///   .imgWrap {
+///     position: relative;
+///     height: 0;
+///     padding-top: 75%;
+///     width: 100%;
+///   }
+///   .imgWrap > img {
+///     display: block;
+///	    position: absolute;
+///	    width: 100% !important;
+///	    height: 100% !important;
+///	    top: 0;
+///	    margin: 0;
+///	    padding: 0;
+///   }
+/// @group Intrinsic Ratios
+/// @link https://github.com/at-import/toolkit/blob/2.x.x/stylesheets/toolkit/_intrinsic-ratio.scss
+/// @link http://www.alistapart.com/articles/creating-intrinsic-ratios-for-video/
+/// @param {Number} $ratio [16/9]
+/// @param {Number} $width [100%]
+/// @param {String} $elements [> *] Used to define which children should be affected.
+/// @param {String} $position [top]
+/// @require {Mixin} intrinsicRatioParent
+/// @require {Mixin} intrinsicRatioChild
+/// @require {Mixin} intrinsicRatioRatio
+@mixin intrinsicRatio($ratio: 16/9, $width: 100%, $elements: '> *', $position: top) {
+	@include intrinsicRatioParent();
+
+	@include intrinsicRatioRatio($ratio, $width, $position);
+
+	@each $element in $elements {
+		#{$element} {
+			@include intrinsicRatioChild();
+		}
 	}
 }
 
-/// Hide from both screenreaders and browsers.
-///
-/// @link h5bp.com/u
-@mixin hidden {
-	display: none !important;
+/// Hide visually and from screenreaders, but maintain layout.
+@mixin invisible {
 	visibility: hidden;
 }
+
+/// For image replacement
+///
+/// @link http://bourbon.io/docs/#hide-text
+@mixin ir {
+	overflow: hidden;
+	text-indent: 101%;
+	white-space: nowrap;
+
+	br {
+		display: none;
+	}
+}
+
+/// Set the z-index for a selector based on pre-defined layers
+///
+/// @param {String} $layerName
+/// @require {Map} $layers
+@mixin layer($layerName) {
+	z-index: map-get($layers, $layerName);
+};
 
 /// Hide only visually, but have it available for screenreaders. Can optionally
 /// allow the element to be focusable when navigated to via the keyboard.
 ///
 /// @link h5bp.com/v
 /// @link h5bp.com/p
-/// @param {Boolean} $focusable - Should the element be focusable? Defaults to false.
+/// @param {Boolean} $focusable - [false] Should the element be focusable?.
 @mixin visuallyHidden($focusable: false) {
-	@if $focusable == false {
-		border: 0 !important;
-		clip: rect(0 0 0 0) !important;
-		height: 1px !important;
-		margin: -1px !important;
-		overflow: hidden !important;
-		padding: 0 !important;
-		position: absolute !important;
-		width: 1px !important;
-	} @else {
+	border: 0 !important;
+	clip: rect(0 0 0 0) !important;
+	height: 1px !important;
+	margin: -1px !important;
+	overflow: hidden !important;
+	padding: 0 !important;
+	position: absolute !important;
+	width: 1px !important;
+
+	@if $focusable == true {
 		&:active,
 		&:focus {
 			clip: auto !important;
@@ -78,38 +226,149 @@
 	}
 }
 
-/// Hide visually and from screenreaders, but maintain layout.
-@mixin invisible {
-	visibility: hidden;
-}
-
-/// For image replacement
-@mixin ir {
-	overflow: hidden;
-	text-indent: 100%;
-	white-space: nowrap;
-
-	br {
-		display: none;
-	}
-}
-
 /// Define width and height simultaneously. If no height provided, assume a square.
 ///
 /// @param {Length} $width - width
-/// @param {Length} $height - height (defaults to $width)
+/// @param {Length} $height - height [$width]
 @mixin size($width, $height: $width) {
 	width: $width;
 	height: $height;
 }
 
-/// Make an element a circle with defined diameter
+/// Everybody loves triangles. Adapted from Sass Toolkit.
 ///
-/// @param {Length} $diameter - diameter of circle
-/// @require {mixin} size
-@mixin circle($diameter) {
-	@include size($diameter);
-	border-radius: $diameter/2;
+/// @example scss
+///   .box:after {
+///     content: "";
+///     @include triangle(blue,0.5rem,0.5rem,right);
+///   }
+/// @example css
+///   .box:after {
+///     content: "";
+///     display: block;
+///	    width: 0;
+///	    height: 0;
+///	    border: 0 solid transparent;
+///     border-left-color: blue;
+/// 		border-width: 0.25rem 0 0.25rem 0.5rem;
+///   }
+/// @link https://github.com/at-import/toolkit/blob/2.x.x/stylesheets/toolkit/_triangle.scss
+/// @param {String} $color [inherit]
+/// @param {Number} $height [1em]
+/// @param {Number} $width [1em]
+/// @param {Number} $angle [0]
+@mixin triangle($color: 'inherit', $height: 1em, $width: 1em, $angle: 0) {
+
+	@if nth($angle, 1) == "top" or nth($angle, 1) == "bottom" {
+		$angle: "#{$angle}";
+	}
+
+	@if $angle == "top" {
+		$angle: 0;
+	}
+	@if $angle == "top right" {
+		$angle: 45 * 7;
+	}
+	@if $angle == "right" {
+		$angle: 45 * 2;
+	}
+	@if $angle == "bottom right" {
+		$angle: 45 * 1;
+	}
+	@if $angle == "bottom" {
+		$angle: 45 * 4;
+	}
+	@if $angle == "bottom left" {
+		$angle: 45 * 3;
+	}
+	@if $angle == "left" {
+		$angle: 45 * 6;
+	}
+	@if $angle == "top left" {
+		$angle: 45 * 5;
+	}
+
+	@if unit($height) == "" or unit($height) == "%" {
+		@debug "in triangle #{$height} is not a compatible unit for height."
+	}
+
+	@if unit($width) == "" or unit($width) == "%" {
+		@debug "in triangle #{$width} is not a compatible unit for width."
+	}
+
+	// offset 45deg to make each side start at 0
+	$deg: $angle + 45;
+	// if units, remove units
+	@if unit($deg) == deg {
+		$deg: $deg / 1deg;
+	}
+	// shift to be on a scale from 0 to 90.
+	@while $deg > 90 {
+		$deg: $deg - 90;
+	}
+	@while $deg < 0 {
+		$deg: $deg + 90;
+	}
+	// Get a ratio of 90 to multiply by.
+	$deg: $deg / 90;
+
+	// make sure metrics are reset
+	display: block;
+	width: 0;
+	height: 0;
+	border: 0 solid transparent;
+
+	// run through sides
+	@if $angle <= 45 or $angle > 315 {
+		border-bottom-color: $color;
+		border-width: 0 ($width * abs($deg - 1)) $height ($width * $deg);
+	}
+	@if $angle > 45 and $angle <= 135 {
+		border-left-color: $color;
+		border-width: ($height * $deg) 0 ($height * abs($deg - 1)) $width;
+	}
+	@if $angle > 135 and $angle <= 225 {
+		border-top-color: $color;
+		border-width: $height ($width * $deg) 0 ($width * abs($deg - 1));
+	}
+	@if $angle > 225 and $angle <= 315 {
+		border-right-color: $color;
+		border-width: ($height * abs($deg - 1)) $width ($height * $deg) 0;
+	}
+}
+
+/// Force overly-long, single-line spans of text to truncate with ellipsis
+///
+/// @param {Length} $truncationBoundary - max-width of text [null]
+@mixin truncateText($truncationBoundary: ""){
+	@if ( $truncationBoundary != "" ) {
+		max-width: $truncationBoundary;
+	}
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/// Very nice underlines using gradients & text-shadow. Adapted from Sass Toolkit.
+///
+/// @link https://github.com/at-import/toolkit/blob/2.x.x/stylesheets/toolkit/_underline.scss
+/// @link https://medium.com/designing-medium/7c03a9274f9
+/// @param {String} $background [white] Background color the underline will sit on top of
+/// @param {Color} $color [#00e]
+/// @param {Boolean} $clearDescenders [true]
+/// @param {Number} $distance [1] Must be unitless
+/// @param {Number} $width [2] Must be unitless
+/// @param {Number} $PX [0.0625em] Depends on font
+@mixin underline($background: white, $color: #00e, $clearDescenders: true, $distance: 1, $width: 2, $PX: 0.0625em) {
+	background-image: linear-gradient(to top, $background 75%, $color 75%);
+	background-size: (2 * $PX) ((1 + $width) * $PX);
+	background-position: 0 (($width) * $PX) + $distance;
+	text-decoration: none;
+	background-repeat: repeat-x;
+
+	@if $clearDescenders {
+		text-shadow: (1 * $PX) (1 * $PX) 0 $background, (-1 * $PX) 0 0 $background;
+	}
 }
 
 /// Make a list (ul, ol) not look like a list
@@ -120,21 +379,9 @@
 	padding: 0;
 }
 
-/// Force overly-long, single-line spans of text to truncate with ellipsis
-///
-/// @param {Length} $truncationBoundary - max-width of text (default is null)
-@mixin truncateText($truncationBoundary: ""){
-	@if ( $truncationBoundary != "" ) {
-		max-width: $truncationBoundary;
-	}
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
-
 /// Disallow text selection
 ///
-/// @param {String} $value - 'none' (default) or 'text'
+/// @param {String} $value - [none] 'none' or 'text'
 @mixin userTextSelect($value: none) {
 	-webkit-user-select: $value; // Chrome all / Safari all
 	-moz-user-select: $value;    // Firefox all

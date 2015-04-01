@@ -2,10 +2,41 @@
  * Global variables used throughout source files
  */
 
+/// Base font size of the site
+///
+/// @see {Function} em
+/// @see {Function} rem
+$emBase: 16px !global;
+
+/// Base font size of the site used for calculating the modular scale of the site
+///
+/// @see {Function} ms
+$ms-base: em($emBase);
+
+/// Ratio used for calculating the modular scale of the site
+///
+/// @see {Function} ms
+$ms-ratio: $fourth;
+
+/// Layers of various layout components
+///
+/// @see {Mixin} layer
+/// @type Map
+$layers: (
+  modal: 800,
+  logo: 700,
+  header: 600,
+  footer: 500,
+  sidebar: 400,
+  caption: 300,
+  image: 200,
+  text: 100
+) !global;
+
 /// Map of breakpoints for responsive design. Note that these will be converted
 /// to em units by the mq mixin.
 ///
-/// @see {mixin} mq
+/// @see {Mixin} mq
 /// @type Map
 $mq-breakpoints: (
 	narrow :  300px,
@@ -17,6 +48,23 @@ $mq-breakpoints: (
 /// Breakpoint above which styles will need be generated when $mq-responsive is
 /// set to 'false'
 ///
-/// @see {mixin} mq
+/// @see {Mixin} mq
 /// @type String
 $mq-static-breakpoint: wide !global;
+
+/// Settings for Susy grid system. Fluid grid with static (aka 'elastic',
+/// because it's defined in font-relative units) gutters.
+///
+/// @link http://susydocs.oddbird.net/en/latest/settings/#gutter-position
+/// @link https://github.com/ericam/susy/issues/368
+/// @link http://sassmeister.com/gist/7da95c41fff076dd7266
+/// @see {Mixin} container
+/// @see {Mixin} span
+/// @type Map
+$susy: (
+  gutter-position: inside-static,
+  container: 100%,
+  columns: 12,
+  column-width: 8em,
+  gutter: 1em/8em,
+) !global;

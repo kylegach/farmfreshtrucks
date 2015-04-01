@@ -51,6 +51,7 @@
     "open": "0.0.5",
     "pretty-hrtime": "~0.2.1",
     "require-dir": "^0.1.0",
+    "susy": "^2.2.2",
     "vinyl-source-stream": "~0.1.1",
     "watchify": "^2.4.0"
   },

@@ -1,7 +1,8 @@
-// Normalize always goes first
-@import '../../../node_modules/normalize.css/normalize.css';
+@import 'base/starter';
+@import 'base/boxSizing';
 
-// @import 'vendors/...';
+@import 'vendors/modular-scale';
+@import '../../../node_modules/susy/sass/susy';
 
 @import 'utils/variables';
 @import 'utils/functions';
@@ -10,9 +11,6 @@
 @import 'utils/placeholders';
 @import 'utils/helpers';
 
-@import 'base/boxSizing';
-
-// @import 'layout/grid';
 // @import 'layout/header';
 // @import 'layout/footer';
 

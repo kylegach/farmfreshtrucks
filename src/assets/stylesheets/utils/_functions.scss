@@ -1,11 +1,121 @@
-/// Slightly lighten a color
-/// (Note that I changed how this functions slightly from the linked source.)
-/// @link http://sass-guidelin.es/#lightening-and-darkening-colors
-/// @param {Color} $color - color to tint
-/// @param {Number} $percentage - percentage of `white` in returned color
-/// @return {Color}
-@function tint($color, $percentage) {
-  @return mix($color, white, 100-$percentage);
+/// Determine the luma value of a color. From Sass Toolkit.
+///
+/// @link https://github.com/at-import/toolkit/blob/2.x.x/stylesheets/toolkit/_colors.scss
+/// @link http://en.wikipedia.org/wiki/Luminance_(video)
+/// @param {Color} $color
+/// @return {Number}
+@function luma($color) {
+	@return (red($color) * .299) + (green($color) * .587) + (blue($color) * .114);
+}
+
+/// Determine whether the luma of one color is greater than another
+///
+/// @param {Color} $color1
+/// @param {Color} $color2
+/// @return {Boolean}
+/// @see {Function} luma
+@function luma-gte($color1, $color2) {
+	@if luma($color1) >= luma($color2) {
+		@return true;
+	}
+	@else {
+		@return false;
+	}
+}
+
+/// Determine whether the luma of one color is less than another
+///
+/// @param {Color} $color1
+/// @param {Color} $color2
+/// @return {Boolean}
+/// @see {Function} luma
+@function luma-lte($color1, $color2) {
+	@if luma($color1) <= luma($color2) {
+		@return true;
+	}
+	@else {
+		@return false;
+	}
+}
+
+/// Determine the difference of luma for one color and another
+///
+/// @param {Color} $color1
+/// @param {Color} $color2
+/// @return {Number}
+/// @see {Function} luma
+@function luma-diff($color1, $color2) {
+	@return luma($color1) - luma($color2);
+}
+
+/// Converts from pixels to ems. Adapted from Bourbon.
+///
+/// @example scss - Relative to <body>
+///   .thing {
+///     padding: em(12) 0;
+///   }
+/// @example css - Relative to <body>
+///   .thing {
+///     padding: 0.75em 0;
+///   }
+/// @example scss - Relative to parent, with font-size 24px
+///   .thing {
+///     padding: em(12,24) 0;
+///   }
+/// @example css - Relative to parent, with font-size 24px
+///   .thing {
+///     padding: 0.5em 0;
+///   }
+/// @link http://bourbon.io/docs/#px-to-em
+/// @param {Number} $pxVal
+/// @param {Number} $base [$emBase]
+/// @require {Variable} $emBase
+/// @require {Function} stripUnits
+/// @return {Number}
+@function em($pxVal, $base: $emBase) {
+	@if not unitless($pxVal) {
+		$pxVal: strip-units($pxVal);
+	}
+	@if not unitless($base) {
+		$base: strip-units($base);
+	}
+	@return ($pxVal / $base) * 1em;
+}
+
+/// Converts from pixels to rems. Adapted from Bourbon.
+///
+/// @example scss
+///   .thing {
+///     padding: rem(12) 0;
+///   }
+/// @example css
+///   .thing {
+///     padding: 0.75rem 0;
+///   }
+/// @link http://bourbon.io/docs/#px-to-rem
+/// @param {Number} $pxVal
+/// @require {Variable} $emBase
+/// @require {Function} stripUnits
+/// @return {Number}
+@function rem($pxVal) {
+	@if not unitless($pxVal) {
+		$pxVal: stripUnits($pxVal);
+	}
+
+	$base: $em-base;
+	@if not unitless($base) {
+		$base: stripUnits($base);
+	}
+	@return ($pxVal / $base) * 1rem;
+}
+
+/// Strips the unit from a number. Adapted from Bourbon.
+///
+/// @link http://bourbon.io/docs/#strip-units
+/// @param {Number (With Unit)} $value
+/// @return {Number (Unitless)}
+@function stripUnits($value) {
+	@return ($value / ($value * 0 + 1));
 }
 
 /// Slightly darken a color
@@ -15,5 +125,23 @@
 /// @param {Number} $percentage - percentage of `black` in returned color
 /// @return {Color}
 @function shade($color, $percentage) {
-  @return mix($color, black, 100-$percentage);
+	@return mix($color, black, 100-$percentage);
+}
+
+/// Slightly lighten a color
+/// (Note that I changed how this functions slightly from the linked source.)
+/// @link http://sass-guidelin.es/#lightening-and-darkening-colors
+/// @param {Color} $color - color to tint
+/// @param {Number} $percentage - percentage of `white` in returned color
+/// @return {Color}
+@function tint($color, $percentage) {
+	@return mix($color, white, 100-$percentage);
+}
+
+/// Grab the right-most part of a selector
+///
+/// @param {List} $selector
+/// @return String
+@function x-tail($selector) {
+	@return nth(nth($selector, -1), -1);
 }
