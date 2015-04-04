@@ -1,5 +1,5 @@
 @function ms-calc($Value, $Base: $ms-base, $Ratio: $ms-ratio) {
-  
+
   // If pow exists use it.
   // It supports non-interger values!
   @if $MS-pow-exists {
@@ -12,6 +12,7 @@
   // If not, use ms-pow().
   // Not as fast or capable of non-integer exponents.
   @else {
-    @return ms-pow($Ratio, $Value) * $Base;
+    // @return ms-pow($Ratio, $Value) * $Base; // Libsass throws an error if multiplying by a variable here
+    @return ms-pow($Ratio, $Value) * 1em; // Ugly hardcoded version for now
   }
 }
