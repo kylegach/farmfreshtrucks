@@ -22,7 +22,7 @@ gulp.task('sass', function () {
 		.pipe(rename(function (path) { // [1]
 			path.basename += ".min";
 		}))
-		.pipe(sourcemaps.write())
+		.pipe(sourcemaps.write('./'))
 		.pipe(gulp.dest(config.dest))  // [1]
 		.pipe(size())
 		.pipe(browserSync.reload({stream:true}));
