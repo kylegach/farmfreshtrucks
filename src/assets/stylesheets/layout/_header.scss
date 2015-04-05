@@ -1,0 +1,66 @@
+.SiteHeader {
+	background-color: color(green);
+
+	@include mq($from: medium) {
+		@include cf;
+		display: flex;
+		flex-direction: row-reverse;
+	}
+}
+
+.SiteLogo {
+	color: white;
+	font-size: ms(1);
+	margin: 0;
+	padding: $space1 0;
+	text-align: center;
+
+	@include mq($from: medium) {
+		@include span(4 rtl);
+		flex-basis: percent(1/3);
+		align-self: center;
+		text-align: left;
+	}
+}
+
+.SiteNav {
+	@include mq($until: medium) {
+		background-color: shade(color(green),50);
+	}
+
+	@include mq($from: medium) {
+		@include span(8 rtl);
+		flex-basis: percent(2/3);
+		align-self: center;
+	}
+}
+
+	.SiteNavList {
+		@extend .unList;
+		text-align: center;
+
+		@include mq($from: medium) {
+			text-align: right;
+		}
+
+		@include mq($from: wide) {
+			font-size: ms(1);
+		}
+	}
+
+		.SiteNavList-item {
+			display: inline-block;
+
+			&:first-child {
+				margin-left: 0;
+			}
+		}
+
+		.SiteNavList-link {
+			color: white;
+			display: block;
+			line-height: 44px;
+			padding: 0 $space1/2;
+			text-decoration: none;
+		}
+

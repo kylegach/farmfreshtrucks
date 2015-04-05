@@ -1,17 +1,23 @@
+// This one contains the @viewport block and must go first
 @import 'base/starter';
-@import 'base/boxSizing';
 
 @import 'vendors/modular-scale';
+@import 'utils/mq'; // Move this to the vendors folder later
 @import '../../../node_modules/susy/sass/susy';
 
 @import 'utils/variables';
 @import 'utils/functions';
 @import 'utils/mixins';
-@import 'utils/mq';
 @import 'utils/placeholders';
 @import 'utils/helpers';
 
-// @import 'layout/header';
-// @import 'layout/footer';
+@import 'base/boxSizing';
+@import 'base/typography';
 
-// @import 'components/...;
+@import 'layout/site';
+@import 'layout/header';
+// @import 'layout/footer';
+@import 'layout/homepage';
+
+@import 'components/kickstarterCTA';
+@import 'components/homepage';

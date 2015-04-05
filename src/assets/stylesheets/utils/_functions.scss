@@ -1,3 +1,11 @@
+/// Returns a color from a map of colors
+///
+/// @param {String} $color
+/// @require {Map} $colors
+@function color($color) {
+	@return map-get($colors, $color);
+};
+
 /// Determine the luma value of a color. From Sass Toolkit.
 ///
 /// @link https://github.com/at-import/toolkit/blob/2.x.x/stylesheets/toolkit/_colors.scss
@@ -107,6 +115,10 @@
 		$base: stripUnits($base);
 	}
 	@return ($pxVal / $base) * 1rem;
+}
+
+@function percent($num) {
+	@return $num*100%;
 }
 
 /// Strips the unit from a number. Adapted from Bourbon.

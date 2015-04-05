@@ -1,0 +1,76 @@
+.home {
+
+	.Section--whoWeAre {
+		background-color: color(mustard);
+		color: white;
+	}
+
+	.Section--map {
+		padding: 0;
+	}
+
+		@include mq($from: wide) {
+			.truckMap {
+				height: 400px; // Overriding the inline height attribute of 300px
+			}
+		}
+
+	@include mq($from: medium) {
+		.SiteMain {
+			display: flex;
+			flex-wrap: wrap;
+			width: 100%;
+		}
+
+		.Section {
+			flex-basis: 100%;
+		}
+
+		.Section--map {
+			order: -1;
+		}
+
+		.Section--blogTeaser {
+			@include span(8);
+			flex-basis: percent(2/3);
+		}
+	}
+
+	@include mq(medium, wide) {
+		.Section--socialEmbeds {
+			@include span(4);
+			flex-basis: percent(1/3);
+		}
+
+		.Section--recipes {
+			display: flex;
+		}
+
+		.recipe {
+			flex: 1 1 auto;
+		}
+	}
+
+	@include mq($from: wide) {
+
+		.SiteMain {
+			position: relative;
+		}
+
+		.Section--socialEmbeds {
+			position: absolute;
+			top: $space2;
+			right: $space2;
+			width: percent(1/3);
+		}
+
+		.Section--recipes {
+			@include span(4);
+			flex-basis: percent(1/3);
+		}
+
+		.Section--footer {
+			@include break;
+		}
+	}
+} // END .home

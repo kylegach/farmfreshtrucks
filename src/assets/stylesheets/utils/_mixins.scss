@@ -25,6 +25,13 @@
 	}
 }
 
+/// Alias for clearfix
+///
+/// @alias clearfix
+@mixin cf {
+	@include clearfix;
+}
+
 /// Apply a margin (and other styles) to every selected item after the first one
 ///
 /// @example scss

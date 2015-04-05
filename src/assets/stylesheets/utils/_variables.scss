@@ -2,14 +2,31 @@
  * Global variables used throughout source files
  */
 
+/// Colors used throughout the site
+///
+/// @see {Function} color
+/// @type Map
+$colors: (
+	brickRed    : rgb(115,2,2),
+	darkRed     : rgb(75,24,0),
+	green       : rgb(0,83,0),
+	mustard     : rgb(215,162,67),
+	kickstarter : #2bde73
+) !global;
+
 /// Base font size of the site
 ///
 /// @see {Function} em
 /// @see {Function} rem
+/// @see {Variable} $ms-base Used for modular scale
 $emBase: 16px !global;
+
+/// Font stack used throughout the site
+$fontStack: 'Avenir Next','Futura','Helvetica Neue',sans-serif;
 
 /// Base font size of the site used for calculating the modular scale of the site
 ///
+/// @require {Variable} $emBase
 /// @see {Function} ms
 $ms-base: em($emBase);
 
@@ -23,14 +40,14 @@ $ms-ratio: $fourth;
 /// @see {Mixin} layer
 /// @type Map
 $layers: (
-  modal: 800,
-  logo: 700,
-  header: 600,
-  footer: 500,
-  sidebar: 400,
-  caption: 300,
-  image: 200,
-  text: 100
+	modal: 800,
+	logo: 700,
+	header: 600,
+	footer: 500,
+	sidebar: 400,
+	caption: 300,
+	image: 200,
+	text: 100
 ) !global;
 
 /// Map of breakpoints for responsive design. Note that these will be converted
@@ -40,7 +57,7 @@ $layers: (
 /// @type Map
 $mq-breakpoints: (
 	narrow :  300px,
-	medium :  740px,
+	medium :  800px,
 	wide   :  980px,
 	xwide  : 1300px
 ) !global;
@@ -52,6 +69,12 @@ $mq-breakpoints: (
 /// @type String
 $mq-static-breakpoint: wide !global;
 
+/// Spacing used throughout the site
+$space1: ms(1);
+$space2: ms(2);
+$space3: ms(3);
+$space4: ms(4);
+
 /// Settings for Susy grid system. Fluid grid with static (aka 'elastic',
 /// because it's defined in font-relative units) gutters.
 ///
@@ -62,9 +85,9 @@ $mq-static-breakpoint: wide !global;
 /// @see {Mixin} span
 /// @type Map
 $susy: (
-  gutter-position: inside-static,
-  container: 100%,
-  columns: 12,
-  column-width: 8em,
-  gutter: 1em/8em,
+	gutter-position: inside-static,
+	container: 100%,
+	columns: 12,
+	column-width: 8rem,
+	gutter: 1rem/8rem,
 ) !global;

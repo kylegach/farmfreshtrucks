@@ -3,6 +3,12 @@
 	zoom: 1;
 }
 
+// Normalize always goes before everything except the @viewport block(s)
+@import '../../../node_modules/normalize.css/normalize.css';
+
+// The rest is stuff that would extend or overwrite Normalize, but we don't want
+// to touch the npm'd file.
+
 embed,
 img,
 object,
@@ -11,5 +17,8 @@ video {
 	height: auto;
 }
 
-// Normalize always goes before everything except the @viewport block(s)
-@import '../../../node_modules/normalize.css/normalize.css';
+fieldset {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
