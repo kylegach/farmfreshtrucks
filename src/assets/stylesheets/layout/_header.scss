@@ -12,14 +12,22 @@
 	color: white;
 	font-size: ms(1);
 	margin: 0;
-	padding: $space1 0;
+	padding: $s1 0;
 	text-align: center;
 
 	@include mq($from: medium) {
-		@include span(4 rtl);
-		flex-basis: percent(1/3);
 		align-self: center;
 		text-align: left;
+	}
+
+	@include mq(medium, wide) {
+		@include span(4 rtl);
+		flex-basis: percent(4/12);
+	}
+
+	@include mq($from: wide) {
+		@include span(3 rtl);
+		flex-basis: percent(3/12);
 	}
 }
 
@@ -29,9 +37,17 @@
 	}
 
 	@include mq($from: medium) {
-		@include span(8 rtl);
-		flex-basis: percent(2/3);
 		align-self: center;
+	}
+
+	@include mq(medium, wide) {
+		@include span(8 rtl);
+		flex-basis: percent(8/12);
+	}
+
+	@include mq($from: wide) {
+		@include span(9 rtl);
+		flex-basis: percent(9/12);
 	}
 }
 
@@ -60,7 +76,7 @@
 			color: white;
 			display: block;
 			line-height: 44px;
-			padding: 0 $space1/2;
+			padding: 0 $s1/2;
 			text-decoration: none;
 		}
 

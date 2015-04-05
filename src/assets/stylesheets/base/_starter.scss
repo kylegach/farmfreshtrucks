@@ -9,6 +9,10 @@
 // The rest is stuff that would extend or overwrite Normalize, but we don't want
 // to touch the npm'd file.
 
+html {
+	font-size: 100%;
+}
+
 embed,
 img,
 object,

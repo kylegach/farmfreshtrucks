@@ -1,13 +1,44 @@
 body {
 	color: color(darkRed);
-	font-size: 100%;
+	font: 1em/1.5 $fontStack;
+
+	// Super basic responsive typography
+	@include mq($until: medium) {
+		font-size: ms(-1);
+	}
 }
 
 p {
-
+	font-size: ms(1);
 }
 
-h1, .h1, %h1 { font-size: ms(4); }
-h2, .h2, %h2 { font-size: ms(3); }
-h3, .h3, %h3 { font-size: ms(2); }
-h4, .h4, %h4 { font-size: ms(1); }
+h1 > a, h2 > a, h3 > a, h4 > a {
+	text-decoration: none;
+}
+
+h1, .h1, %h1 { font-size: ms(3); }
+h2, .h2, %h2 { font-size: ms(2); }
+h3, .h3, %h3 { font-size: ms(1); }
+h4, .h4, %h4 { font-size: ms(0); }
+
+// Super basic responsive typography
+@include mq($from: medium) {
+	h1, .h1, %h1 { font-size: ms(4); }
+	h2, .h2, %h2 { font-size: ms(3); }
+	h3, .h3, %h3 { font-size: ms(2); }
+	h4, .h4, %h4 { font-size: ms(1); }
+}
+
+h1,     .h1,     %h1,
+h1 > a, .h1 > a, %h1 > a {
+	color: color(brickRed);
+}
+
+h2,     .h2,     %h2,
+h2 > a, .h2 > a, %h2 > a {
+	color: color(brickRed);
+}
+h3,     .h3,     %h3,
+h3 > a, .h3 > a, %h3 > a {
+	color: color(brickRed);
+}

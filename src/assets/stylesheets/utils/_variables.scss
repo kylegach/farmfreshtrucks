@@ -56,7 +56,7 @@ $layers: (
 /// @see {Mixin} mq
 /// @type Map
 $mq-breakpoints: (
-	narrow :  300px,
+	narrow :  500px,
 	medium :  800px,
 	wide   :  980px,
 	xwide  : 1300px
@@ -70,10 +70,10 @@ $mq-breakpoints: (
 $mq-static-breakpoint: wide !global;
 
 /// Spacing used throughout the site
-$space1: ms(1);
-$space2: ms(2);
-$space3: ms(3);
-$space4: ms(4);
+$s1: ms(1);
+$s2: ms(2);
+$s3: ms(3);
+$s4: ms(4);
 
 /// Settings for Susy grid system. Fluid grid with static (aka 'elastic',
 /// because it's defined in font-relative units) gutters.
@@ -89,5 +89,5 @@ $susy: (
 	container: 100%,
 	columns: 12,
 	column-width: 8rem,
-	gutter: 1rem/8rem,
+	gutter: $s2/8rem,
 ) !global;

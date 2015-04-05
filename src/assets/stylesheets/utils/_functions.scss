@@ -117,7 +117,24 @@
 	@return ($pxVal / $base) * 1rem;
 }
 
+/// Returns a number with percent units, intended for converting fractions
+///
+/// @example scss
+///   .thing {
+///     width: percent(4/12);
+///   }
+/// @example css {
+///   .thing {
+///     width: 33.333333333%;
+///   }
+/// @param {Number} $num Intended to be a fraction
+/// @require {Function} stripUnits
+/// @return {Number (Percentage)}
 @function percent($num) {
+	@if not unitless($num) {
+		$num: stripUnits($num);
+		@warn "Percent Function: I stripped them for you, but I'm not meant to be used with units."
+	}
 	@return $num*100%;
 }
 
