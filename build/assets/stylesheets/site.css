@@ -125,6 +125,9 @@ h2, .h2, h2 > a, .h2 > a {
 h3, .h3, .KickstarterCTA, h3 > a, .h3 > a, .KickstarterCTA > a {
   color: #730202; }
 
+a {
+  color: #730202; }
+
 body {
   background-color: #fbf5ec; }
 
@@ -249,18 +252,6 @@ body {
 .SignUpForm-heading {
   color: white; }
 
-.home .Section--whoWeAre {
-  background-color: #d7a243;
-  color: white; }
-.home .Section--map {
-  padding: 0; }
-.home .truckMap {
-  display: block; }
-@media (min-width: 61.25em) {
-  .home .truckMap {
-    height: 400px; } }
-.home .Section--recipes {
-  background-color: #f5e7d0; }
 @media (min-width: 50em) {
   .home .SiteMain {
     display: -webkit-box;
@@ -270,16 +261,37 @@ body {
     -webkit-flex-wrap: wrap;
         -ms-flex-wrap: wrap;
             flex-wrap: wrap;
-    width: 100%; }
-  .home .Section {
-    -webkit-flex-basis: 100%;
-        -ms-flex-preferred-size: 100%;
-            flex-basis: 100%; }
-  .home .Section--map {
-    -webkit-box-ordinal-group: 0;
-    -webkit-order: -1;
-        -ms-flex-order: -1;
-            order: -1; }
+    width: 100%; } }
+@media (min-width: 61.25em) {
+  .home .SiteMain {
+    position: relative; } }
+.home .Section {
+  padding: 1.333333333em; }
+  @media (min-width: 50em) {
+    .home .Section {
+      margin: 1.333333333em 0;
+      -webkit-flex-basis: 100%;
+          -ms-flex-preferred-size: 100%;
+              flex-basis: 100%; } }
+.home .Section--whoWeAre {
+  background-color: #d7a243;
+  color: white;
+  margin-top: 0; }
+.home .Section--map {
+  margin: 0;
+  padding: 0; }
+  @media (min-width: 50em) {
+    .home .Section--map {
+      -webkit-box-ordinal-group: 0;
+      -webkit-order: -1;
+          -ms-flex-order: -1;
+              order: -1; } }
+.home .truckMap {
+  display: block; }
+  @media (min-width: 61.25em) {
+    .home .truckMap {
+      height: 400px; } }
+@media (min-width: 50em) {
   .home .Section--blogTeaser {
     box-sizing: border-box;
     width: 66.666666667%;
@@ -298,23 +310,10 @@ body {
     padding-right: 1rem;
     -webkit-flex-basis: 33.333333333%;
         -ms-flex-preferred-size: 33.333333333%;
-            flex-basis: 33.333333333%; }
-  .home .Section--recipes {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex; }
-  .home .recipe {
-    -webkit-box-flex: 1;
-    -webkit-flex: 1 1 auto;
-        -ms-flex: 1 1 auto;
-            flex: 1 1 auto; }
-    .home .recipe + .recipe {
-      margin-left: 1.777777777em; } }
+            flex-basis: 33.333333333%; } }
 @media (min-width: 61.25em) {
-  .home .SiteMain {
-    position: relative; }
   .home .Section--socialEmbeds {
+    margin: 0;
     padding: 0;
     position: absolute;
     top: 1.333333333em;
@@ -325,18 +324,39 @@ body {
     .home .Section--socialEmbeds > iframe {
       height: 350px;
       height: -webkit-calc(400px - 1.333333333em*2);
-      height: calc(400px - 1.333333333em*2); }
-  .home .Section--recipes {
-    box-sizing: border-box;
-    width: 33.333333333%;
-    float: left;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    -webkit-flex-basis: 33.333333333%;
-        -ms-flex-preferred-size: 33.333333333%;
-            flex-basis: 33.333333333%; }
-  .home .Section--footer {
-    clear: both; } }
+      height: calc(400px - 1.333333333em*2); } }
+.home .Section--recipes {
+  background-color: #f5e7d0; }
+  @media (min-width: 50em) and (max-width: 61.24em) {
+    .home .Section--recipes {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex; } }
+  @media (min-width: 61.25em) {
+    .home .Section--recipes {
+      box-sizing: border-box;
+      width: 33.333333333%;
+      float: left;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      -webkit-flex-basis: 33.333333333%;
+          -ms-flex-preferred-size: 33.333333333%;
+              flex-basis: 33.333333333%; } }
+@media (min-width: 50em) and (max-width: 61.24em) {
+  .home .recipe {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 auto;
+        -ms-flex: 1 1 auto;
+            flex: 1 1 auto; }
+    .home .recipe + .recipe {
+      margin-left: 1.777777777em; } }
+.home .Section--footer {
+  margin-bottom: 0;
+  padding-bottom: 1.333333333em; }
+  @media (min-width: 61.25em) {
+    .home .Section--footer {
+      clear: both; } }
 
 .KickstarterCTA {
   background-color: #2bde73;

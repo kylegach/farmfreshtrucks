@@ -1,75 +1,64 @@
 .home {
 
-	.Section--whoWeAre {
-		background-color: color(mustard);
-		color: white;
-	}
-
-	.Section--map {
-		padding: 0;
-	}
-
-		.truckMap {
-			display: block;
-		}
-
-		@include mq($from: wide) {
-			.truckMap {
-				height: 400px; // Overriding the inline height attribute of 300px
-			}
-		}
-
-	.Section--recipes {
-		background-color: tint(color(mustard),75);
-	}
-
-	@include mq($from: medium) {
-		.SiteMain {
+	.SiteMain {
+		@include mq($from: medium) {
 			display: flex;
 			flex-wrap: wrap;
 			width: 100%;
 		}
 
-		.Section {
+		@include mq($from: wide) {
+			position: relative;
+		}
+	}
+
+	.Section {
+		padding: $s1;
+
+		@include mq($from: medium) {
+			margin: $s1 0;
 			flex-basis: 100%;
 		}
+	}
 
-		.Section--map {
+	.Section--whoWeAre {
+		background-color: color(mustard);
+		color: white;
+		margin-top: 0;
+	}
+
+	.Section--map {
+		margin: 0;
+		padding: 0;
+
+		@include mq($from: medium) {
 			order: -1;
 		}
+	}
 
+		.truckMap {
+			display: block;
+
+			@include mq($from: wide) {
+				height: 400px; // Overriding the inline height attribute of 300px
+			}
+		}
+
+	@include mq($from: medium) {
 		.Section--blogTeaser {
 			@include span(8);
 			flex-basis: percent(8/12);
 		}
 	}
 
-	@include mq(medium, wide) {
-		.Section--socialEmbeds {
+	.Section--socialEmbeds {
+		@include mq(medium, wide) {
 			@include span(4);
 			flex-basis: percent(4/12);
 		}
 
-		.Section--recipes {
-			display: flex;
-		}
-
-		.recipe {
-			flex: 1 1 auto;
-
-			+ .recipe {
-				margin-left: $s2;
-			}
-		}
-	}
-
-	@include mq($from: wide) {
-
-		.SiteMain {
-			position: relative;
-		}
-
-		.Section--socialEmbeds {
+		@include mq($from: wide) {
+			margin: 0;
 			padding: 0;
 			position: absolute;
 			top: $s1;
@@ -83,13 +72,36 @@
 				height: calc(400px - #{$s1}*2);
 			}
 		}
+	}
 
-		.Section--recipes {
+	.Section--recipes {
+		background-color: tint(color(mustard),75);
+
+		@include mq(medium, wide) {
+			display: flex;
+		}
+
+		@include mq($from: wide) {
 			@include span(4);
 			flex-basis: percent(4/12);
 		}
+	}
 
-		.Section--footer {
+		@include mq(medium, wide) {
+			.recipe {
+				flex: 1 1 auto;
+
+				+ .recipe {
+					margin-left: $s2;
+				}
+			}
+		}
+
+	.Section--footer {
+		margin-bottom: 0;
+		padding-bottom: $s1;
+
+		@include mq($from: wide) {
 			@include break;
 		}
 	}
